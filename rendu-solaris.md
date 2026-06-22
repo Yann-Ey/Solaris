@@ -79,7 +79,7 @@ Ces risques structurent les choix d'architecture présentés dans la suite.
 
 L'architecture proposée repose sur une logique de répartition claire : **le site principal héberge le cœur métier et les données** (maîtrise, performance, données qui restent chez SOLARIS), tandis que **le cloud Azure assure la résilience** en tant que second site de reprise d'activité. La segmentation réseau par VLAN isole les usages, et un tunnel VPN site-à-site relie de façon sécurisée les deux environnements.
 
-![Architecture cible SOLARIS](SOLARIS-Architecture-cible.png)
+![Architecture cible SOLARIS](SOLARIS-Architecture-cible1.png)
 
 ***Figure 1 — Architecture cible SOLARIS (hybride on-premise / cloud).***
 
