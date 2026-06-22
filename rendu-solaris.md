@@ -133,7 +133,7 @@ L'hybridation repose sur l'usage du **cloud Microsoft Azure comme second site**,
 
 **Liaison sécurisée.** Un **VPN site-à-site IPsec** relie le pare-feu pfSense du site principal à l'**Azure VPN Gateway**. Les deux environnements communiquent ainsi de manière privée et chiffrée à travers l'internet public.
 
-**Accès distant des collaborateurs.** Les techniciens nomades accèdent au SI via un **VPN SSL** via Wireguard, assorti d'une authentification multifacteur, leur permettant de travailler comme s'ils étaient au siège.
+**Accès distant des collaborateurs.** Les techniciens nomades accèdent au SI via un **VPN SSL** (WireGuard) assorti d'une authentification multifacteur, leur permettant de travailler comme s'ils étaient au siège.
 
 **Accès des clients industriels.** Les clients consultant la supervision de leurs installations y accèdent en **lecture seule** via le reverse proxy protégé par WAF et MFA, sans jamais entrer dans le réseau interne.
 
@@ -176,11 +176,15 @@ Cette section met ainsi en perspective deux familles de solutions de résilience
 
 ---
 
-## Partie 10 — Postes de travail et VDI
+## Partie 10 — Site web : migration de Wix vers un CMS auto-hébergé (WordPress + Elementor)
 
-La virtualisation des postes de travail (**VDI**) est étudiée comme **perspective** pour SOLARIS. Elle présenterait un intérêt pour deux populations : les **techniciens nomades**, qui pourraient retrouver un environnement de travail standardisé et sécurisé depuis un chantier, et les **postes partagés** au sein de l'entreprise.
+Le site vitrine de SOLARIS est aujourd'hui hébergé sur **Wix**, une plateforme propriétaire en mode SaaS. Cette solution crée une **dépendance à l'éditeur**, limite la maîtrise technique (hébergement externe, données et configuration non maîtrisées) et reste en dehors du périmètre supervisé et sauvegardé du système d'information. L'équipe propose donc de **rapatrier le site** sur le serveur web Debian de l'architecture cible (machine virtuelle en **DMZ**, VLAN 40).
 
-Une solution légère est proposée : la mise à disposition d'un **bureau ou d'applications à distance** (services Bureau à distance, ou solution de passerelle de type Apache Guacamole devant les machines virtuelles), couplée à des **profils utilisateurs** gérés via l'Active Directory. Compte tenu de la taille de l'entreprise, ce volet est positionné comme **optionnel** et conditionné à l'évolution des besoins, afin de ne pas alourdir inutilement l'infrastructure cible.
+**Choix d'un CMS auto-hébergé : WordPress + Elementor.** Le site est reconstruit sous **WordPress**, un CMS open source largement répandu, que SOLARIS héberge et maîtrise. Le constructeur de pages **Elementor** est ajouté pour permettre l'édition **visuelle, en glisser-déposer**, sans compétence technique : les personnes qui géraient déjà le site sur Wix retrouvent une logique d'édition proche, ce qui **ne bouscule pas les habitudes des utilisateurs** tout en faisant gagner la maîtrise et l'autonomie.
+
+**Intégration technique.** WordPress s'appuie sur une pile web classique (serveur web, PHP et base de données) sur la VM Debian. Le site est publié en **HTTPS** derrière un **reverse proxy** et un pare-feu applicatif (**WAF**), en zone démilitarisée (VLAN 40). Il entre ainsi pleinement dans le périmètre du SI : il est **sauvegardé** (règle 3-2-1, externalisation vers Azure) et **supervisé** (test de disponibilité via `blackbox_exporter`). Les mises à jour (cœur WordPress, thème, extensions) sont maîtrisées en interne.
+
+**Bénéfices et point de vigilance.** Par rapport à Wix, cette approche apporte la **maîtrise des données**, la **suppression de la dépendance** à un éditeur tiers, l'**intégration au SI** (sécurité, sauvegarde, supervision) et une réduction des coûts récurrents, tout en conservant la simplicité d'édition. En contrepartie, WordPress étant une cible fréquente d'attaques, son **durcissement** est indispensable : mises à jour régulières, MFA sur l'accès d'administration, WAF et restriction des accès au back-office.
 
 ---
 
