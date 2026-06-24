@@ -36,7 +36,7 @@ Ce rapport propose une **architecture cible** répondant aux exigences de **séc
 7. [Supervision](#partie-7--supervision)
 8. [Sauvegarde, PRA et PCA](#partie-8--sauvegarde-pra-et-pca)
 9. [Résilience et virtualisation Hyper-V](#partie-9--résilience-et-virtualisation-hyper-v)
-10. [Postes de travail et VDI](#partie-10--postes-de-travail-et-vdi)
+10. [Site web : migration de Wix vers un CMS auto-hébergé (WordPress + Elementor)]()
 - [Évolutions par rapport au sujet de base](#évolutions-par-rapport-au-sujet-de-base)
 - [Conclusion](#conclusion)
 - [Sources](#sources)
